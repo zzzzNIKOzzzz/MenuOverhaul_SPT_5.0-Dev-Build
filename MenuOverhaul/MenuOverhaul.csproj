@@ -1,0 +1,38 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <AssemblyName>MenuOverhaul</AssemblyName>
+    <Description>MenuOverhaul</Description>
+    <AssemblyVersion>$(Version)</AssemblyVersion>
+    <Version>1.0.0</Version>
+    <Authors>zzzNIKOzzz</Authors>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <LangVersion>latest</LangVersion>
+    <Configurations>Debug;Release</Configurations>
+    <RootNamespace>MenuOverhaul</RootNamespace>
+    <Platforms>AnyCPU</Platforms>
+    <TargetFramework>net6.0</TargetFramework>
+    
+    <!-- Заглушка для конфликтов версий .NET (MSB3277) -->
+    <NoWarn>MSB3277;MSB3246</NoWarn>
+    
+    <!-- Путь к игре -->
+    <GamePath>D:\Games\EscapeFromTarkov5.0</GamePath>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- Ядро BepInEx (Harmony, IL2CPP-загрузчик) -->
+    <Reference Include="$(GamePath)\BepInEx\core\*.dll">
+      <Private>false</Private>
+    </Reference>
+
+    <!-- Обертки игровых сборок (Assembly-CSharp, UnityEngine и т.д.) -->
+    <Reference Include="$(GamePath)\BepInEx\interop\*.dll">
+      <Private>false</Private>
+    </Reference>
+
+    <!-- Ядро SPT 5.0 (SPTushonka) -->
+    <Reference Include="$(GamePath)\BepInEx\plugins\sptushonka\*.dll">
+      <Private>false</Private>
+    </Reference>
+  </ItemGroup>
+</Project>

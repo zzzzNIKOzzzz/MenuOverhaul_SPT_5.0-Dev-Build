@@ -1,0 +1,33 @@
+using EFT.UI;
+using MenuOverhaul.Helpers.Services;
+using MenuOverhaul.Infrastructure.Reflection;
+using SPTushonka.Reflection.Patching;
+using System.Reflection;
+
+namespace MenuOverhaul.Patches
+{
+    internal class DefaultUIButtonIdlePatchAdapter : ModulePatch
+    {
+        protected override MethodBase GetTargetMethod()
+        {
+            if (!EftReflectionMap.IsInitialized)
+            {
+                EftReflectionMap.Initialize();
+            }
+
+            var targetMethod = EftReflectionMap.DefaultButtonIdleMethod;
+            if (targetMethod == null)
+            {
+                EftReflectionMap.WarnIfMissing(EftReflectionMap.DefaultButtonIdleMethod, EftReflectionMap.DefaultButtonIdleMethodKey);
+            }
+
+            return targetMethod;
+        }
+
+        [PatchPostfix]
+        private static void Postfix(DefaultUIButtonAnimation __instance, bool animated)
+        {
+            MainMenuButtonAnimationService.ApplyIdle(__instance, animated);
+        }
+    }
+}
